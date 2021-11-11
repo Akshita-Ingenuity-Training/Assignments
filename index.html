@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Dosis&display=swap" rel="stylesheet">
+    <title>JS Canvas</title>
+</head>
+<body>
+    <div>
+        <nav>
+            <ul id="main-menu">
+                <div>
+                    <li><span>F</span>ile</li>
+                    <ul class="menu">
+                        <a href="#" onclick="newCanvas()"><li>New</li></a>
+                        <a href="#" onclick="openFile()"><li>Open</li></a>
+                        <a href="#" id="save"><li>Save</li></a>
+                        <a href="#"><li>Save As</li></a>
+                        <a href="#"><li>Page Setup</li></a>
+                        <a href="#" onclick="window.close()"><li>Exit</li></a>
+                    </ul>
+                </div>
+                <div>
+                    <li><span>E</span>dit</li>
+                    <ul class="menu">
+                        <a href="#"><li>Undo</li></a>
+                        <a href="#"><li>Repeat</li></a>
+                        <a href="#"><li>Cut</li></a>
+                        <a href="#"><li>Copy</li></a>
+                        <a href="#"><li>Paste</li></a>
+                        <a href="#"><li>Select All</li></a>
+                    </ul>
+                </div>
+                <div>
+                    <li><span>V</span>iew</li>
+                    <ul class="menu">
+                        <a href="#" onclick="toggleToolBox()"><li>Tool Box</li></a>
+                        <a href="#" onclick="toggleColorBox()"><li>Color Box</li></a>
+                        <a href="#" onclick="toggleStatusBar()"><li>Status Bar</li></a>
+                        <a href="#"><li>Text Toolbar</li></a>
+                        <a href="#" id="zoom"><li>Zoom</li></a>
+                        <a href="#"><li>View Bitmap</li></a>
+                    </ul>
+                </div>
+                <div>
+                    <li><span>I</span>mage</li>
+                    <ul class="menu">
+                        <a href="#" id="flip"><li>Flip/Rotate</li></a>
+                        <a href="#"><li>Stretch/Skew</li></a>
+                        <a href="#" onclick="invertColors()"><li>Invert Colors</li></a>
+                        <a href="#"><li>Attributes</li></a>
+                        <a href="#" onclick="clearCanvas()"><li>Clear Image</li></a>
+                        <a href="#"><li>Draw Opaque</li></a>
+                    </ul>
+                </div>
+                <div>
+                    <li><span>C</span>olors</li>
+                    <ul class="menu">
+                        <input type="color" id="head" value="#e66465" style="opacity: 0;" onchange="colorChange()">
+                        <a href="#" style="position: absolute; top: 7px; left: 2px;"><li>Change Color</li></a>
+                    </ul>
+                </div> 
+                <a href="https://github.com/AshtrayShetty/JS-canvas" id="help" target="_blank" style="color: black;">
+                    <li><span>H</span>elp</li>
+                </a>
+            </ul>
+        </nav>
+    </div>
+    <div id="sidebar">
+        <div id="buttons">
+            <button><i class="far fa-hand-paper"></i></button>
+            <button title="Select"><i class="fas fa-mouse-pointer"></i></button>
+            <button title="Eraser/Color Eraser"><i class="fas fa-eraser"></i></button>
+            <button title="Fill With Color"><i class="fas fa-fill-drip"></i></button>
+            <button title="Pick Color"><i class="fas fa-eye-dropper"></i></button>
+            <button title="Magnifier"><i class="fas fa-search"></i></button>
+            <button title="Pencil"><i class="fas fa-pencil-alt"></i></button>
+            <button title="Brush"><i class="fas fa-paint-brush"></i></button>
+            <button title="Airbrush"><i class="fas fa-spray-can"></i></button>
+            <button title="Text"><i class="fas fa-font"></i></button>
+            <button title="Line"><i class="fas fa-slash"></i></button>
+            <button title="Curve"><img class="curve" src="./images/curve.png" alt=""></button>
+            <button title="Rectangle"><img class="rect" src="./images/rectangle.png" alt=""></button>
+            <button title="Polygon"><i class="fas fa-draw-polygon"></i></button>
+            <button title="Ellipse"><i class="far fa-circle"></i></button>
+            <button title="Rounded Rectangle"><i class="far fa-square"></i></button>
+        </div>
+        <div id="color-select"></div>
+    </div>
+
+    <div id="canvas-container">
+        <canvas id="canvas" width="1466" height="610"></canvas>
+        <div id="text-editor">
+            <select name="fonts" id="fonts">
+                <option value="Arial" selected="selected">Arial</option>
+                <option value="Arial Black">Arial Black</option>
+                <option value="Arial Narrow">Arial Narrow</option>
+                <option value="Calibri">Calibri</option>
+                <option value="Cambria">Cambria</option>
+                <option value="Cambria Math">Cambria Math</option>
+                <option value="Candara">Candara</option>
+                <option value="Comic Sans MS">Comic Sans MS</option>
+                <option value="Consolas">Consolas</option>
+                <option value="Constantia">Constantia</option>
+                <option value="Corbel">Corbel</option>
+                <option value="Courier">Courier</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Franklin Gothic Heavy">Franklin Gothic Heavy</option>
+                <option value="Franklin Gothic Medium">Franklin Gothic Medium</option>
+                <option value="Gabriola">Gabriola</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Helvetica">Helvetica</option>
+                <option value="Impact">Impact</option>
+                <option value="Lucida Console">Lucida Console</option>
+                <option value="Lucida Sans Unicode">Lucida Sans Unicode</option>
+                <option value="MS Gothic">MS Gothic</option>
+                <option value="MS PGothic">MS PGothic</option>
+                <option value="MS UI Gothic">MS UI Gothic</option>
+                <option value="MV Boli">MV Boli</option>
+                <option value="Malgun Gothic">Malgun Gothic</option>
+                <option value="Microsoft Himalaya">Microsoft Himalaya</option>
+                <option value="Microsoft JhengHei">Microsoft JhengHei</option>
+                <option value="Microsoft Sans Serif">Microsoft Sans Serif</option>
+                <option value="Microsoft YaHei">Microsoft YaHei</option>
+                <option value="Microsoft Yi Baiti">Microsoft Yi Baiti</option>
+                <option value="MingLiU-ExtB">MingLiU-ExtB</option>
+                <option value="MingLiU_HKSCS-ExtB">MingLiU_HKSCS-ExtB</option>
+                <option value="Mongolian Baiti">Mongolian Baiti</option>
+                <option value="NSimSun">NSimSun</option>
+                <option value="PMingLiU-ExtB">PMingLiU-ExtB</option>
+                <option value="Palatino Linotype">Palatino Linotype</option>
+                <option value="Segoe Print">Segoe Print</option>
+                <option value="Segoe Script">Segoe Script</option>
+                <option value="Segoe UI">Segoe UI</option>
+                <option value="Segoe UI Light">Segoe UI Light</option>
+                <option value="Segoe UI Semibold">Segoe UI Semibold</option>
+                <option value="SimSun">SimSun</option>
+                <option value="SimSun-ExtB">SimSun-ExtB</option>
+                <option value="Sylfaen">Sylfaen</option>
+                <option value="Tahoma">Tahoma</option>
+                <option value="Times">Times</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Trebuchet MS">Trebuchet MS</option>
+                <option value="Verdana">Verdana</option>
+            </select>
+            <input type="number" name="size" style="width: 60px;" value="13">
+            <button style="width: 30px;"><strong>B</strong></button>
+            <button style="width: 30px;"><em><strong>I</strong></em></button>
+            <button style="width: 30px;"><u><strong>U</strong></u></button>
+        </div>
+    </div>
+
+    <div id="bottom">
+        <div class="pressed">
+            <button id="foreground" style="background-color: rgb(255, 0, 255);"></button>
+            <button id="background" style="background-color: rgb(255, 255, 255);"></button>
+        </div>
+        <div id="color-palette">
+            <button class="color" style="background-color: rgb(0, 0, 0);"></button>
+            <button class="color" style="background-color: rgb(128, 128, 128);"></button>
+            <button class="color" style="background-color: rgb(128, 0, 0);"></button>
+            <button class="color" style="background-color: rgb(143, 143, 61);"></button>
+            <button class="color" style="background-color: rgb(0, 100, 0);"></button>
+            <button class="color" style="background-color: rgb(0, 139, 139);"></button>
+            <button class="color" style="background-color: rgb(0, 0, 128);"></button>
+            <button class="color" style="background-color: rgb(139, 0, 139);"></button>
+            <button class="color" style="background-color: rgb(128, 128, 0);"></button>
+            <button class="color" style="background-color: rgb(0, 128, 128);"></button>
+            <button class="color" style="background-color: rgb(47, 79, 79);"></button>
+            <button class="color" style="background-color: rgb(14, 4, 73);"></button>
+            <button class="color" style="background-color: rgb(26, 12, 158);"></button>
+            <button class="color" style="background-color: rgb(165, 42, 42);"></button>
+            <button class="color" style="background-color: rgb(255, 255, 255);"></button>
+            <button class="color" style="background-color: rgb(192, 192, 192);"></button>
+            <button class="color" style="background-color: rgb(255, 0, 0);"></button>
+            <button class="color" style="background-color: rgb(255, 255, 0);"></button>
+            <button class="color" style="background-color: rgb(0, 128, 0);"></button>
+            <button class="color" style="background-color: rgb(173, 255, 47);"></button>
+            <button class="color" style="background-color: rgb(0, 0, 255);"></button>
+            <button class="color" style="background-color: rgb(255, 0, 255);"></button>
+            <button class="color" style="background-color: rgb(0, 255, 255);"></button>
+            <button class="color" style="background-color: rgb(235, 255, 121);"></button>
+            <button class="color" style="background-color: rgb(23, 245, 60);"></button>
+            <button class="color" style="background-color: rgb(128, 0, 128);"></button>
+            <button class="color" style="background-color: rgb(250, 128, 114);"></button>
+            <button class="color" style="background-color: rgb(255, 165, 0);"></button>
+        </div>
+    </div>
+
+    <div id="status-bar">
+        <div id="description">For Help, click Help Topics on the Help Menu.</div>
+        <div id="cursor-pos"></div>
+        <div id="draw-size"></div>
+    </div>
+	 
+    <object id="airbrush" data="./images/Grungy.svg" type="image/svg+xml"></object>
+    <div id="cursor-eraser"></div>
+    <div id="image-placement"></div>
+    <script src="canvas.js"></script>
+    <script src="bootstrap.js"></script>
+    <script src="menu.js"></script>
+    <script src="https://kit.fontawesome.com/21641d8459.js" crossorigin="anonymous"></script>
+</body>
+</html>
